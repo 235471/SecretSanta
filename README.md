@@ -7,7 +7,7 @@ This is a project to simulate drawing for a secret santa situation
 
 ## Features
 
-- Html and CSS to provide the front-end [vercel](https://shopping-cart-green-alpha.vercel.app/).
+- Html and CSS to provide the front-end [vercel](https://secret-santa-one-theta.vercel.app/).
 - Javascript for the user interaction with the game.
 
 ## Author
