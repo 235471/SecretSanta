@@ -2,13 +2,16 @@ let friends = [];
 const clearInput = (id) => { document.getElementById(id).value = '';} 
 
 function add() {
-    let friendName = document.getElementById('nome-amigo').value;
+    let friendName = document.getElementById('nome-amigo').value.trim();
     if(friendName === '') {
         alert('Digite um nome');
         clearInput('nome-amigo');
         return;
     }
-    if(friends.includes(friendName)){
+    // Convert input name to lowercase for case-insensitive comparison
+    let lowerCaseFriendName = friendName.toLowerCase();
+    //Use some which returns true or false converting to Lower case to avoid dublicates due to case sensitive and compare the input also converted to lower case
+    if(friends.some(friend => friend.toLowerCase() === lowerCaseFriendName)) {
         alert('Esse nome já foi adicionado');
         clearInput('nome-amigo');
         return;
@@ -77,15 +80,18 @@ function updateFriendList(friendName) {
         friendElement.addEventListener('click', () => {
             removeFriend(friendName);
         });           
+
+        // When a friend is added uses CSS class with different color and fade-in animation
+        friendElement.classList.add('added');
+
         // Append the span to the paragraph with id 'lista-amigos'
-        console.log(friendsList,friendElement);
         friendsList.appendChild(friendElement);       
 
 }
 
-function removeFriend(friend) {
+function removeFriend(friendToRemove) {
     // Remove the friend from the array
-    friends = friends.filter(friend => friend !== friend);
+    friends = friends.filter(friend => friend !== friendToRemove);
 
     // Now, remove the span element from the DOM
     const friendsList = document.getElementById('lista-amigos');
@@ -93,8 +99,16 @@ function removeFriend(friend) {
 
     // Loop through all span elements and remove the one matching the friend to remove
     for (let i = 0; i < friendElements.length; i++) {
-        if (friendElements[i].textContent === friend) {
-            friendElements[i].remove();
+        if (friendElements[i].textContent === friendToRemove) {
+
+            // When a friend is removed uses CSS class with different color and fade-out animation
+            friendElements[i].classList.add('removed');
+
+            // Need to wait so added EventListener to wait for the fade-out animation to end before actually removing the element
+            friendElements[i].addEventListener('animationend', () => {
+                friendElements[i].remove();
+            });
+
             break; // Once we find and remove the element, stop the loop
         }
     }
