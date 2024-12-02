@@ -116,12 +116,12 @@ body {
 /* Adding and removing a friend with animation */
 .added {
   background-color: #80e0a7;
-  animation: fadeIn 0.5s ease-out;
+  animation: fadeIn 1s ease-out;
 }
 
 .removed {
   background-color: #e33b3b;
-  animation: fadeOut 0.5s ease-out;
+  animation: fadeOut 1s ease-out;
 }
 
 /* Fade-in animation for adding */
