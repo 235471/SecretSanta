@@ -5,10 +5,18 @@ function add() {
     if(friendName === '') {
         alert('Digite um nome')
         return;
+        document.getElementById('nome-amigo').value = '';
+    }
+    if(friends.includes(friendName)){
+        alert('Esse nome já foi adicionado');
+        return;
     }
     friends.push(friendName)
-    document.getElementById('lista-amigos').textContent = friends.join(', ');
-     // Clear the input field after adding friend name
+
+    // Update the DOM with the list of names
+    updateFriendList(friendName);
+
+    // Clear the input field after adding friend name
     document.getElementById('nome-amigo').value = '';
 }
 
@@ -18,9 +26,9 @@ function draw() {
     let drawFriends = document.querySelector('.prizeDraw__container');
     // Clear any previous elements inside it
     drawFriends.textContent = '';
-    // Check if we have at least 2 people so we can make a pair
-     if (friends.length < 2) {
-        alert('Precisa adicionar ao menos dois nomes!');
+    // Check if we have at least 3 people so we can make a pair
+     if (friends.length < 3) {
+        alert('Precisa adicionar ao menos três nomes!');
         return;
     }
 
@@ -53,6 +61,39 @@ function shuffle(array) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
     }
-    return array;   
-  
+    return array;
+}
+
+function updateFriendList(friendName) {
+    const friendsList = document.getElementById('lista-amigos');
+
+        const friendElement = document.createElement('span');
+        friendElement.textContent = friendName;
+        // Add the 'friend-item' class to apply the new styles created
+        friendElement.classList.add('friend-item');     
+        // Add a click event to remove the name that was clicked
+        friendElement.addEventListener('click', () => {
+            removeFriend(friendName);
+        });           
+        // Append the span to the paragraph with id 'lista-amigos'
+        console.log(friendsList,friendElement);
+        friendsList.appendChild(friendElement);       
+
+}
+
+function removeFriend(friend) {
+    // Remove the friend from the array
+    friends = friends.filter(friend => friend !== friend);
+
+    // Now, remove the span element from the DOM
+    const friendsList = document.getElementById('lista-amigos');
+    const friendElements = friendsList.getElementsByTagName('span');
+
+    // Loop through all span elements and remove the one matching the friend to remove
+    for (let i = 0; i < friendElements.length; i++) {
+        if (friendElements[i].textContent === friend) {
+            friendElements[i].remove();
+            break; // Once we find and remove the element, stop the loop
+        }
+    }
 }

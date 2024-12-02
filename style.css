@@ -96,6 +96,16 @@ body {
   line-height: 110%;
 }
 
+.friend-item {
+  cursor: pointer;
+  margin-right: 10px;
+  display: inline-block;
+}
+
+.friend-item:not(:last-child)::after {
+  content: ', ';
+}
+
 .form {
   display: flex;
   flex-direction: column;
